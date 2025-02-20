@@ -1,4 +1,4 @@
-package vn.nchuy099.RMI;
+package com.nchuy099.RMI;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

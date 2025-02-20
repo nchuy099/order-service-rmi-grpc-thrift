@@ -1,4 +1,4 @@
-package vn.nchuy099.config;
+package com.nchuy099.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

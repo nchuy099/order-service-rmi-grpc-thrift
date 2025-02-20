@@ -1,6 +1,6 @@
-package vn.nchuy099.service;
+package com.nchuy099.service;
 
-import vn.nchuy099.config.DatabaseConfig;
+import com.nchuy099.config.DatabaseConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

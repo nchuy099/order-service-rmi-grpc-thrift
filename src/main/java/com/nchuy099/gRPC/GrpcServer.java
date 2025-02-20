@@ -1,4 +1,4 @@
-package vn.nchuy099.gRPC;
+package com.nchuy099.gRPC;
 
 import gRPC.OrderRequest;
 import gRPC.OrderResponse;
@@ -6,7 +6,7 @@ import gRPC.OrderServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import vn.nchuy099.service.ProductService;
+import com.nchuy099.service.ProductService;
 
 public class GrpcServer {
     public static void main(String[] args) throws Exception {
@@ -14,7 +14,7 @@ public class GrpcServer {
                 .addService(new OrderServiceImpl())
                 .build()
                 .start();
-        System.out.println("gRPC Server started...");
+        System.out.println("gRPC Server is running...");
         server.awaitTermination();
     }
 }

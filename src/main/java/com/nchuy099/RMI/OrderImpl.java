@@ -1,6 +1,6 @@
-package vn.nchuy099.RMI;
+package com.nchuy099.RMI;
 
-import vn.nchuy099.service.ProductService;
+import com.nchuy099.service.ProductService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

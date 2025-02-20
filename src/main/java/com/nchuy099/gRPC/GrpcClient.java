@@ -1,4 +1,4 @@
-package vn.nchuy099.gRPC;
+package com.nchuy099.gRPC;
 
 import gRPC.OrderRequest;
 import gRPC.OrderResponse;
