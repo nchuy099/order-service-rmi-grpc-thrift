@@ -9,22 +9,55 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
+import py4j.GatewayServer;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.time.Instant;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ThriftClient {
-    public static void main(String[] args) throws TException {
-        TTransport transport = new TSocket("localhost", 9090);
-        transport.open();
+    public Map<String, Object> request(String productId, int quantity) throws TException {
+        TTransport transport = new TSocket("192.168.67.50", 9000);
+        if(!transport.isOpen()) transport.open();
 
         TProtocol protocol = new TBinaryProtocol(transport);
         OrderService.Client client = new OrderService.Client(protocol);
 
-        OrderRequest request = new OrderRequest();
-        request.setProductId("1");
-        request.setQuantity(3);
 
-        OrderResponse response = client.calculateTotal(request);
-        System.out.println("Total Cost: " + response.getResult());
+        Map<String, Object> resp = new LinkedHashMap<>();
+        double res = -1;
+
+        OrderRequest request = new OrderRequest();
+        request.setProductId(productId);
+        request.setQuantity(quantity);
+
+        OrderResponse response;
+        long start = Instant.now().toEpochMilli();
+        response = client.calculateTotal(request);
+        long end = Instant.now().toEpochMilli();
 
         transport.close();
+
+        res = response.getResult();
+
+        resp.put("status", res >= 0 ? 1 : 0);
+        resp.put("result", res >= 0 ? res : null);
+        resp.put("start_time", start);
+        resp.put("end_time", end);
+
+        return resp;
+    }
+
+    public void hello() {
+        System.out.println(1);
+    }
+
+    public static void main(String[] args) throws TException {
+
+        ThriftClient thriftClient = new ThriftClient();
+
+        System.out.println(thriftClient.request("1", 3));
     }
 }
