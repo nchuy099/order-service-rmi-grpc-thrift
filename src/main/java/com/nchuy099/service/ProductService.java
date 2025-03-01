@@ -12,7 +12,7 @@ public class ProductService {
         String sql = "SELECT price FROM products WHERE product_id = ?";
         double price = -1;
 
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             statement.setString(1, productId);
@@ -22,7 +22,7 @@ public class ProductService {
                     price = resultSet.getDouble("price");
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
