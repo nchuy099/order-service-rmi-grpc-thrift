@@ -1,19 +1,29 @@
 package com.nchuy099.RMI;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+
 public class RMIClient {
-    public static void main(String[] args) {
+    private static final Registry registry;
+
+    private static final Order stub;
+
+    static {
         try {
-            String productId = "1";
-            int quantity = 10;
-            System.setProperty("java.net.preferIPv4Stack", "true");
-            Registry registry = LocateRegistry.getRegistry("192.168.67.50", 1099);
-            Order stub = (Order) registry.lookup("OrderService");
-            System.out.println("Total cost for " + quantity + " with id " + productId + ": " + stub.calculateTotal(productId, quantity));
-        } catch (Exception e) {
-            e.printStackTrace();
+            registry = LocateRegistry.getRegistry("192.168.67.50", 1099);
+            stub = (Order) registry.lookup("OrderService");
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    public double getTotalCost(String productId, int quantity) throws RemoteException, NotBoundException {
+        return stub.calculateTotal(productId, quantity);
+    }
+
 }
