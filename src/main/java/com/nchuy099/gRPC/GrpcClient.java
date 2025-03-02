@@ -5,19 +5,28 @@ import gRPC.OrderResponse;
 import gRPC.OrderServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 
 public class GrpcClient {
-    public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
-                .usePlaintext()
-                .build();
+    private static final ManagedChannel channel = ManagedChannelBuilder
+            .forAddress("192.168.67.50", 50051)
+            .usePlaintext()
+            .build();
 
-        OrderServiceGrpc.OrderServiceBlockingStub stub =
-                OrderServiceGrpc.newBlockingStub(channel);
+    private static final OrderServiceGrpc.OrderServiceBlockingStub stub =
+            OrderServiceGrpc.newBlockingStub(channel);
 
-        OrderRequest request = OrderRequest.newBuilder().setProductId("1").setQuantity(3).build();
+    public double getTotalCost(String productId, int quantity) throws RemoteException, NotBoundException {
+
+        OrderRequest request = OrderRequest.newBuilder()
+                        .setProductId(productId)
+                        .setQuantity(quantity)
+                        .build();
+
         OrderResponse response = stub.calculateTotal(request);
+        return response.getResult();
 
-        System.out.println("Total cost: " + response.getResult());
     }
 }
