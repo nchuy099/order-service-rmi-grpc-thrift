@@ -7,18 +7,19 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+        <!--    Locust4J    -->
+        <dependency>
+            <groupId>com.github.myzhan</groupId>
+            <artifactId>locust4j</artifactId>
+            <version>LATEST</version>
+        </dependency>
+             
+         <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sf.py4j/py4j -->
-        <dependency>
-            <groupId>net.sf.py4j</groupId>
-            <artifactId>py4j</artifactId>
-            <version>0.10.9.7</version>
-        </dependency>
+        </dependency>     
 
         <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
         <dependency>
