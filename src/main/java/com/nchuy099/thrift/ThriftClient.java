@@ -8,21 +8,22 @@ import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+
 public class ThriftClient {
-    public static void main(String[] args) throws TException {
-        TTransport transport = new TSocket("localhost", 9090);
-        transport.open();
+
+    public double getTotalCost(String productId, int quantity) throws TException {
+        TTransport transport = new TSocket("192.168.67.50", 9000);
+        if (!transport.isOpen()) transport.open();
 
         TProtocol protocol = new TBinaryProtocol(transport);
         OrderService.Client client = new OrderService.Client(protocol);
 
         OrderRequest request = new OrderRequest();
-        request.setProductId("1");
-        request.setQuantity(3);
+        request.setProductId(productId);
+        request.setQuantity(quantity);
 
-        OrderResponse response = client.calculateTotal(request);
-        System.out.println("Total Cost: " + response.getResult());
-
-        transport.close();
+        OrderResponse response;
+        response = client.calculateTotal(request);
+        return response.getResult();
     }
 }
