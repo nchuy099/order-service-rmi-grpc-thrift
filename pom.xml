@@ -7,6 +7,11 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.myzhan</groupId>
+            <artifactId>locust4j</artifactId>
+            <version>LATEST</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/net.sf.py4j/py4j -->
         <dependency>
             <groupId>net.sf.py4j</groupId>

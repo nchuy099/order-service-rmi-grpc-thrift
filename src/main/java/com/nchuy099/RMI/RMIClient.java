@@ -18,27 +18,8 @@ public class RMIClient {
     public RMIClient() throws RemoteException, NotBoundException {
     }
 
-    public Map<String, Object> request(String productId, int quantity) throws RemoteException, NotBoundException {
-        Map<String, Object> resp = new LinkedHashMap<>();
-        double res = -1;
-        boolean success = false;
-        long start = Instant.now().toEpochMilli();
-
-        try {
-            res = stub.calculateTotal(productId, quantity);
-            success = true;
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        long end = Instant.now().toEpochMilli();
-
-        resp.put("status", success && res >= 0 ? 1 : 0);
-        resp.put("result", success && res >= 0 ? res : null);
-        resp.put("start_time", start);
-        resp.put("end_time", end);
-
-        return resp;
+    public double getTotalCost(String productId, int quantity) throws RemoteException, NotBoundException {
+        return stub.calculateTotal(productId, quantity);
     }
 
     public static void main(String[] args) {

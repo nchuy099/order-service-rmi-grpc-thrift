@@ -20,14 +20,13 @@ import java.util.Map;
 public class ThriftClient {
     public Map<String, Object> request(String productId, int quantity) throws TException {
         TTransport transport = new TSocket("192.168.67.50", 9000);
-        if(!transport.isOpen()) transport.open();
-
-        TProtocol protocol = new TBinaryProtocol(transport);
-        OrderService.Client client = new OrderService.Client(protocol);
-
+        if (!transport.isOpen()) transport.open();
 
         Map<String, Object> resp = new LinkedHashMap<>();
         double res = -1;
+
+        TProtocol protocol = new TBinaryProtocol(transport);
+        OrderService.Client client = new OrderService.Client(protocol);
 
         OrderRequest request = new OrderRequest();
         request.setProductId(productId);
@@ -37,8 +36,6 @@ public class ThriftClient {
         long start = Instant.now().toEpochMilli();
         response = client.calculateTotal(request);
         long end = Instant.now().toEpochMilli();
-
-        transport.close();
 
         res = response.getResult();
 
@@ -58,6 +55,7 @@ public class ThriftClient {
 
         ThriftClient thriftClient = new ThriftClient();
 
-        System.out.println(thriftClient.request("1", 3));
-    }
+        GatewayServer gatewayServer = new GatewayServer(thriftClient);
+        gatewayServer.start();
+        System.out.println("Py4J Gateway server is running...");    }
 }
