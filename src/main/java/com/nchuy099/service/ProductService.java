@@ -9,14 +9,7 @@ import java.sql.SQLException;
 
 public class ProductService {
 
-    private final int PROCESSING_DELAY = 500;
-
     public double calculateTotal(String productId, int quantity) {
-        try {
-            Thread.sleep(PROCESSING_DELAY);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return getPrice(productId) * quantity;
     }
 
