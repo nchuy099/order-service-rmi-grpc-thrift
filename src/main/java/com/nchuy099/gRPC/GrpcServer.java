@@ -22,7 +22,7 @@ public class GrpcServer {
 class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
     @Override
     public void calculateTotal(OrderRequest request, StreamObserver<OrderResponse> responseObserver) {
-        double result = ProductService.getPrice(request.getProductId()) * request.getQuantity();
+        double result = new ProductService().calculateTotal(request.getProductId(), request.getQuantity());
         OrderResponse response = OrderResponse.newBuilder().setResult(result).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
