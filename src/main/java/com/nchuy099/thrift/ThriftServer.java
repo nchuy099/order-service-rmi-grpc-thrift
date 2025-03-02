@@ -26,9 +26,7 @@ public class ThriftServer {
 class OrderServiceHandler implements OrderService.Iface {
     @Override
     public OrderResponse calculateTotal(OrderRequest request) throws TException {
-        double price = ProductService.getPrice(request.productId);
-        double total = price * request.quantity;
-
+        double total = new ProductService().calculateTotal(request.productId, request.quantity);
         OrderResponse response = new OrderResponse();
         response.setResult(total);
         return response;

@@ -12,8 +12,7 @@ public class OrderImpl extends UnicastRemoteObject implements Order {
 
 
     public double calculateTotal(String productId, int quantity) {
-        double price = ProductService.getPrice(productId);
-        return price * quantity;
+        return new ProductService().calculateTotal(productId, quantity);
     }
 
 

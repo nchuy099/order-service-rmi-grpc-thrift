@@ -8,7 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProductService {
-    public static double getPrice(String productId) {
+
+    private final int PROCESSING_DELAY = 500;
+
+    public double calculateTotal(String productId, int quantity) {
+        try {
+            Thread.sleep(PROCESSING_DELAY);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return getPrice(productId) * quantity;
+    }
+
+    public double getPrice(String productId) {
         String sql = "SELECT price FROM products WHERE product_id = ?";
         double price = -1;
 
