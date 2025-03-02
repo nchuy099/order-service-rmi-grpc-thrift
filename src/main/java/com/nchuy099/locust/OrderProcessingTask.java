@@ -3,6 +3,7 @@ package com.nchuy099.locust;
 import com.github.myzhan.locust4j.AbstractTask;
 import com.github.myzhan.locust4j.Locust;
 import com.nchuy099.RMI.RMIClient;
+import com.nchuy099.gRPC.GrpcClient;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -11,18 +12,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class OrderProcessingTask extends AbstractTask {
-
-    private final RMIClient rmiClient;
-
-    {
-        try {
-            rmiClient = new RMIClient();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public int getWeight() {
